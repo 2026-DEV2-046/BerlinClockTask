@@ -11,7 +11,12 @@ class BerlinClockConverter {
         )
     }
 
-    fun generateFiveHoursRow(hour: Int): List<Boolean> {
-        return listOf(false, false, false, false)
+    fun generateFiveHoursRow(hour: Int): List<BerlinClockSegment> {
+        return List(4){
+            BerlinClockSegment(
+                isLampOn = false,
+                color = SegmentColor.GRAY
+            )
+        }
     }
 }
