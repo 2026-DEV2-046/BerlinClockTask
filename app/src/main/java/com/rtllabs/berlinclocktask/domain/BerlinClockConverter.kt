@@ -37,7 +37,7 @@ class BerlinClockConverter {
 
        return List(11){ index ->
            val isOn= index < result
-           val color= if(isOn) if (index==2) SegmentColor.RED else SegmentColor.YELLOW  else SegmentColor.GRAY
+           val color= if(isOn) if ((index+1) % 3 ==0) SegmentColor.RED else SegmentColor.YELLOW  else SegmentColor.GRAY
            BerlinClockSegment(
                isLampOn = isOn,
                color = color

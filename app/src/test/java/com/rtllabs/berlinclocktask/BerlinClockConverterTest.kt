@@ -184,6 +184,30 @@ class BerlinClockConverterTest {
             SegmentColor.GRAY),fiveMinuteLampsColor)
     }
 
+    @Test
+    fun fiveMinutes11LampsShouldTurnOnAndEvery3ColorRedOtherColorYellowWhenMinutes59() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val segments = berlinClockConverter.generateFiveMinutesRow(59)
+        val fiveMinuteLampsCount = segments.count { it.isLampOn }
+        val fiveMinuteLampsColor = segments.map { it.color }
+
+
+        assertEquals(11, fiveMinuteLampsCount)
+        assertEquals(listOf(
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW),fiveMinuteLampsColor)
+    }
+
 
 
 }
