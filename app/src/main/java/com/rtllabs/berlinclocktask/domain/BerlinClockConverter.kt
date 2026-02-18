@@ -7,7 +7,7 @@ class BerlinClockConverter {
     internal fun generateSecondsRow(seconds: Int): BerlinClockSegment {
         return BerlinClockSegment(
             isLampOn = seconds % 2 == 0,
-            color = SegmentColor.GRAY
+            color = if (seconds % 2 ==0) SegmentColor.YELLOW else SegmentColor.GRAY
         )
     }
 }

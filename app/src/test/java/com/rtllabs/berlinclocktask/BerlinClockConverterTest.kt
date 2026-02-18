@@ -34,4 +34,13 @@ class BerlinClockConverterTest {
         assertEquals(SegmentColor.GRAY, secondsLamp.color)
     }
 
+    @Test
+    fun secondsLampShouldColorYellowWhenSecondIsEven() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val secondsLamp = berlinClockConverter.generateSecondsRow(2)
+
+        assertEquals(SegmentColor.YELLOW, secondsLamp.color)
+    }
+
 }
