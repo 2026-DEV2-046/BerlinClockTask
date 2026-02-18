@@ -15,4 +15,13 @@ class BerlinClockConverterTest {
         assertFalse(secondsLamp)
     }
 
+    @Test
+    fun secondsLampShouldOnWhenSecondIsEven() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val secondsLamp = berlinClockConverter.generateSecondsRow(2)
+
+        assertTrue(secondsLamp)
+    }
+
 }

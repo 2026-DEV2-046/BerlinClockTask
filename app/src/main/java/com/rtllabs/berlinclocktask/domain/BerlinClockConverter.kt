@@ -1,7 +1,7 @@
 package com.rtllabs.berlinclocktask.domain
 
 class BerlinClockConverter {
-    fun generateSecondsRow(seconds: Int): Boolean {
-        return false
+    internal fun generateSecondsRow(seconds: Int): Boolean {
+        return seconds % 2 == 0
     }
 }
