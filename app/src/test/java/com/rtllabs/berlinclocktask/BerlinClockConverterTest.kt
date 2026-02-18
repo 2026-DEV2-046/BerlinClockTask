@@ -12,7 +12,7 @@ class BerlinClockConverterTest {
         val berlinClockConverter= BerlinClockConverter()
         val secondsLamp = berlinClockConverter.generateSecondsRow(1)
 
-        assertFalse(secondsLamp)
+        assertFalse(secondsLamp.isLampOn)
     }
 
     @Test
@@ -21,7 +21,7 @@ class BerlinClockConverterTest {
 
         val secondsLamp = berlinClockConverter.generateSecondsRow(2)
 
-        assertTrue(secondsLamp)
+        assertTrue(secondsLamp.isLampOn)
     }
 
 }
