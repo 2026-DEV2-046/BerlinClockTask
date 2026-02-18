@@ -10,4 +10,8 @@ class BerlinClockConverter {
             color = if (seconds % 2 ==0) SegmentColor.YELLOW else SegmentColor.GRAY
         )
     }
+
+    fun generateFiveHoursRow(hour: Int): List<Boolean> {
+        return listOf(false, false, false, false)
+    }
 }

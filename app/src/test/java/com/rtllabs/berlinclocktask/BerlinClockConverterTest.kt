@@ -43,4 +43,14 @@ class BerlinClockConverterTest {
         assertEquals(SegmentColor.YELLOW, secondsLamp.color)
     }
 
+    @Test
+    fun fiveHours4LampsShouldOffWhenHour4() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val fiveHoursLamps = berlinClockConverter.generateFiveHoursRow(4)
+
+        assertEquals(listOf(false, false, false, false), fiveHoursLamps)
+    }
+
+
 }
