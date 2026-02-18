@@ -46,9 +46,10 @@ class BerlinClockConverter {
     }
 
     internal fun generateOneMinutesRow(minute: Int): List<BerlinClockSegment> {
-        return List(4){
+        val remainder= minute % 5
+        return List(4){ index ->
             BerlinClockSegment(
-                isLampOn = false,
+                isLampOn = index <remainder,
                 color = SegmentColor.GRAY
             )
         }
