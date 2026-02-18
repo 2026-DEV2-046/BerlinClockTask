@@ -17,7 +17,7 @@ class BerlinClockConverter {
         return List(4){ index ->
             BerlinClockSegment(
                 isLampOn = index < result,
-                color = SegmentColor.GRAY
+                color = if(index < result) SegmentColor.RED else SegmentColor.GRAY
             )
         }
     }
