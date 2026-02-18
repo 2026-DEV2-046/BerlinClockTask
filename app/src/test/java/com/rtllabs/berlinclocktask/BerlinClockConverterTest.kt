@@ -125,6 +125,17 @@ class BerlinClockConverterTest {
         assertEquals(0, fiveMinuteLampsCount)
     }
 
+    @Test
+    fun fiveMinutes11LampsOutOff1ShouldOnWhenMinutes5() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val segments = berlinClockConverter.generateFiveMinutesRow(5)
+        val fiveMinuteLampsCount = segments.count { it.isLampOn }
+
+
+        assertEquals(1, fiveMinuteLampsCount)
+    }
+
 
 
 }
