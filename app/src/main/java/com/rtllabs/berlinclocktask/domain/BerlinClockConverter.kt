@@ -11,13 +11,22 @@ class BerlinClockConverter {
         )
     }
 
-    fun generateFiveHoursRow(hour: Int): List<BerlinClockSegment> {
+    internal fun generateFiveHoursRow(hour: Int): List<BerlinClockSegment> {
         val result = hour/5
 
         return List(4){ index ->
             BerlinClockSegment(
                 isLampOn = index < result,
                 color = if(index < result) SegmentColor.RED else SegmentColor.GRAY
+            )
+        }
+    }
+
+    internal fun generateOneHoursRow(hour: Int): List<BerlinClockSegment> {
+        return List(4){
+            BerlinClockSegment(
+                isLampOn = false,
+                color = SegmentColor.GRAY
             )
         }
     }
