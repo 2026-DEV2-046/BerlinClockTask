@@ -54,5 +54,16 @@ class BerlinClockConverterTest {
         assertEquals(listOf(false, false, false, false), fiveHoursLamps)
     }
 
+    @Test
+    fun fiveHours4LampsOutOf1ShouldTurnOnWhenHour5() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val segments = berlinClockConverter.generateFiveHoursRow(5)
+        val fiveHoursLamps = segments.map { it.isLampOn }
+
+
+        assertEquals(listOf(true, false, false, false), fiveHoursLamps)
+    }
+
 
 }
