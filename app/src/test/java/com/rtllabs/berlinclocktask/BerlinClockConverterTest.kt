@@ -208,6 +208,16 @@ class BerlinClockConverterTest {
             SegmentColor.YELLOW),fiveMinuteLampsColor)
     }
 
+    @Test
+    fun oneMinutesRow4LampsShouldTurnOffWhenMinutes55() {
+        val berlinClockConverter= BerlinClockConverter()
+
+        val segments = berlinClockConverter.generateOneMinutesRow(55)
+        val oneMinuteLampsCount = segments.count { it.isLampOn }
+
+        assertEquals(0, oneMinuteLampsCount)
+    }
+
 
 
 }

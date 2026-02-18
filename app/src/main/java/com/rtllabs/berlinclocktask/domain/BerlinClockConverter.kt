@@ -44,4 +44,13 @@ class BerlinClockConverter {
            )
        }
     }
+
+    internal fun generateOneMinutesRow(minute: Int): List<BerlinClockSegment> {
+        return List(4){
+            BerlinClockSegment(
+                isLampOn = false,
+                color = SegmentColor.GRAY
+            )
+        }
+    }
 }
