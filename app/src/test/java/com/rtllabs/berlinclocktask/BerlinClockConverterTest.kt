@@ -92,10 +92,12 @@ class BerlinClockConverterTest {
         val berlinClockConverter= BerlinClockConverter()
 
         val segments = berlinClockConverter.generateOneHoursRow(6)
-        val fiveHoursLamps = segments.map { it.isLampOn }
+        val oneHoursLamps = segments.map { it.isLampOn }
+        val oneHoursLampsColor = segments.map { it.color }
 
+        assertEquals(listOf(true, false, false, false), oneHoursLamps)
+        assertEquals(listOf(SegmentColor.RED, SegmentColor.GRAY, SegmentColor.GRAY, SegmentColor.GRAY), oneHoursLampsColor)
 
-        assertEquals(listOf(true, false, false, false), fiveHoursLamps)
     }
 
     @Test
