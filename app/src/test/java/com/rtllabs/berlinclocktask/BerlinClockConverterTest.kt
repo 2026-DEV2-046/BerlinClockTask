@@ -1,0 +1,18 @@
+package com.rtllabs.berlinclocktask
+
+import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
+import org.junit.Assert.*
+
+import org.junit.Test
+
+class BerlinClockConverterTest {
+
+    @Test
+    fun secondsLampShouldOffWhenSecondIsOdd() {
+        val berlinClockConverter= BerlinClockConverter()
+        val secondsLamp = berlinClockConverter.generateSecondsRow(1)
+
+        assertFalse(secondsLamp)
+    }
+
+}
