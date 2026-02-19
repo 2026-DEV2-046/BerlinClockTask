@@ -11,7 +11,8 @@ class BerlinClockConverterTest {
     @Test
     fun secondsLampShouldOffWhenSecondIsOdd() {
         val berlinClockConverter= BerlinClockConverter()
-        val secondsLamp = berlinClockConverter.generateSecondsRow(1)
+        val berlinClock = berlinClockConverter.convert(1)
+        val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertFalse(secondsLamp.isLampOn)
     }
@@ -20,7 +21,8 @@ class BerlinClockConverterTest {
     fun secondsLampShouldOnWhenSecondIsEven() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val secondsLamp = berlinClockConverter.generateSecondsRow(2)
+        val berlinClock = berlinClockConverter.convert(2)
+        val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertTrue(secondsLamp.isLampOn)
     }
@@ -29,7 +31,8 @@ class BerlinClockConverterTest {
     fun secondsLampShouldColorGrayWhenSecondIsOdd() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val secondsLamp = berlinClockConverter.generateSecondsRow(1)
+        val berlinClock = berlinClockConverter.convert(1)
+        val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertEquals(SegmentColor.GRAY, secondsLamp.color)
     }
@@ -38,7 +41,8 @@ class BerlinClockConverterTest {
     fun secondsLampShouldColorYellowWhenSecondIsEven() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val secondsLamp = berlinClockConverter.generateSecondsRow(2)
+        val berlinClock = berlinClockConverter.convert(2)
+        val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertEquals(SegmentColor.YELLOW, secondsLamp.color)
     }

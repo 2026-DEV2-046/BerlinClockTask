@@ -1,13 +1,26 @@
 package com.rtllabs.berlinclocktask.domain
 
+import com.rtllabs.berlinclocktask.domain.entity.BerlinClock
+import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 
 class BerlinClockConverter {
-    internal fun generateSecondsRow(seconds: Int): BerlinClockSegment {
-        return BerlinClockSegment(
-            isLampOn = seconds % 2 == 0,
-            color = if (seconds % 2 ==0) SegmentColor.YELLOW else SegmentColor.GRAY
+
+    fun convert(second: Int): BerlinClock {
+        return BerlinClock(
+            secondsRow=generateSecondsRow(second),
+        )
+    }
+
+    private fun generateSecondsRow(seconds: Int): BerlinClockRow {
+        return BerlinClockRow(
+            segments = listOf(
+                BerlinClockSegment(
+                    isLampOn = seconds % 2 == 0,
+                    color = if (seconds % 2 == 0) SegmentColor.YELLOW else SegmentColor.GRAY
+                )
+            )
         )
     }
 
