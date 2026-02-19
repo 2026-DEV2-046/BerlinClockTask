@@ -81,23 +81,23 @@ class BerlinClockConverterTest {
     }
 
     @Test
-    fun oneHours4LampsShouldOffWhenHour5() {
+    fun oneHoursRow4LampsShouldOffWhenHour5() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneHoursRow(5)
-        val oneHoursLamps = segments.map { it.isLampOn }
+        val berlinClock = berlinClockConverter.convert(5,0)
+        val oneHoursLamps = berlinClock.oneHoursRow.segments.map { it.isLampOn }
 
 
         assertEquals(listOf(false, false, false, false), oneHoursLamps)
     }
 
     @Test
-    fun oneHours4LampsOutOf1ShouldTurnOnWhenHour6() {
+    fun oneHoursRow4LampsOutOf1ShouldTurnOnAndColorRedWhenHour6() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneHoursRow(6)
-        val oneHoursLamps = segments.map { it.isLampOn }
-        val oneHoursLampsColor = segments.map { it.color }
+        val berlinClock = berlinClockConverter.convert(6,0)
+        val oneHoursLamps = berlinClock.oneHoursRow.segments.map { it.isLampOn }
+        val oneHoursLampsColor = berlinClock.oneHoursRow.segments.map { it.color }
 
         assertEquals(listOf(true, false, false, false), oneHoursLamps)
         assertEquals(listOf(SegmentColor.RED, SegmentColor.GRAY, SegmentColor.GRAY, SegmentColor.GRAY), oneHoursLampsColor)
@@ -105,12 +105,12 @@ class BerlinClockConverterTest {
     }
 
     @Test
-    fun oneHours4LampsOutOf4ShouldTurnOnAndColorRedWhenHour9() {
+    fun oneHoursRow4LampsOutOf4ShouldTurnOnAndColorRedWhenHour9() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneHoursRow(9)
-        val oneHoursLamps = segments.map { it.isLampOn }
-        val oneHoursLampsColor = segments.map { it.color }
+        val berlinClock = berlinClockConverter.convert(9,0)
+        val oneHoursLamps = berlinClock.oneHoursRow.segments.map { it.isLampOn }
+        val oneHoursLampsColor = berlinClock.oneHoursRow.segments.map { it.color }
 
 
         assertEquals(listOf(true, true, true, true), oneHoursLamps)
