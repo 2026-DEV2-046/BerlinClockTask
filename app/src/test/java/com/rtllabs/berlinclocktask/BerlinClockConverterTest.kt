@@ -245,6 +245,25 @@ class BerlinClockConverterTest {
 
     }
 
+    // 00_00_00 time stamp should return all lamp off except seconds lamp
+    @Test
+    fun converterShouldReturnAllLampOffExceptSecondsLampWhenHoursZeroMinutesZeroSecondZero(){
+        val berlinClockConverter= BerlinClockConverter()
+
+        val berlinClock = berlinClockConverter.convert(hour = 0, minute = 0, second = 0)
+        val secondsRow=berlinClock.secondsRow
+        val fiveHoursRow=berlinClock.fiveHoursRow
+        val oneHoursRow=berlinClock.oneHoursRow
+        val fiveMinutesRow=berlinClock.fiveMinutesRow
+        val oneMinutesRow=berlinClock.oneMinutesRow
+
+        assertEquals(1,secondsRow.segments.count { it.isLampOn })
+        assertEquals(0,fiveHoursRow.segments.count { it.isLampOn })
+        assertEquals(0,oneHoursRow.segments.count { it.isLampOn })
+        assertEquals(0,fiveMinutesRow.segments.count { it.isLampOn })
+        assertEquals(0,oneMinutesRow.segments.count { it.isLampOn })
+    }
+
 
 
 }
