@@ -216,31 +216,31 @@ class BerlinClockConverterTest {
     fun oneMinutesRow4LampsShouldTurnOffWhenMinutes55() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneMinutesRow(55)
-        val oneMinuteLampsCount = segments.count { it.isLampOn }
+        val berlinClock = berlinClockConverter.convert(0,55,0)
+        val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
 
-        assertEquals(0, oneMinuteLampsCount)
+        assertEquals(0, oneMinuteLampsOnCount)
     }
 
     @Test
     fun oneMinutesRow4LampsOutOf1ShouldTurnOnWhenMinutes56() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneMinutesRow(56)
-        val oneMinuteLampsCount = segments.count { it.isLampOn }
+        val berlinClock = berlinClockConverter.convert(0,56,0)
+        val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
 
-        assertEquals(1, oneMinuteLampsCount)
+        assertEquals(1, oneMinuteLampsOnCount)
     }
 
     @Test
     fun oneMinutesRow4LampsShouldTurnOnAndColorYellowWhenMinutes59() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateOneMinutesRow(59)
-        val oneMinuteLampsCount = segments.count { it.isLampOn }
-        val oneMinuteLampsColor = segments.map { it.color }
+        val berlinClock = berlinClockConverter.convert(0,59,0)
+        val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
+        val oneMinuteLampsColor = berlinClock.oneMinutesRow.segments.map { it.color }
 
-        assertEquals(4, oneMinuteLampsCount)
+        assertEquals(4, oneMinuteLampsOnCount)
         assertEquals(listOf(SegmentColor.YELLOW, SegmentColor.YELLOW, SegmentColor.YELLOW, SegmentColor.YELLOW), oneMinuteLampsColor)
 
     }

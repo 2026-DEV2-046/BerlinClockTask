@@ -5,4 +5,5 @@ data class BerlinClock(
     val fiveHoursRow: BerlinClockRow,
     val oneHoursRow: BerlinClockRow,
     val fiveMinutesRow: BerlinClockRow,
+    val oneMinutesRow: BerlinClockRow
 )
