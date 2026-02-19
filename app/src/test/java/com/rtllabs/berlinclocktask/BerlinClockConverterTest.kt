@@ -316,6 +316,59 @@ class BerlinClockConverterTest {
             oneMinutesRow.segments.map { it.color })
     }
 
+    @Test
+    fun converterShouldLightCorrectLampsWhenInputEndOfDay_23_59_59(){
+        val berlinClockConverter= BerlinClockConverter()
+
+        val berlinClock = berlinClockConverter.convert(hour = 23, minute = 59, second = 59)
+        val secondsRow=berlinClock.secondsRow
+        val fiveHoursRow=berlinClock.fiveHoursRow
+        val oneHoursRow=berlinClock.oneHoursRow
+        val fiveMinutesRow=berlinClock.fiveMinutesRow
+        val oneMinutesRow=berlinClock.oneMinutesRow
+
+        assertEquals(0,secondsRow.segments.count { it.isLampOn })
+        assertEquals(4,fiveHoursRow.segments.count { it.isLampOn })
+        assertEquals(3,oneHoursRow.segments.count { it.isLampOn })
+        assertEquals(11,fiveMinutesRow.segments.count { it.isLampOn })
+        assertEquals(4,oneMinutesRow.segments.count { it.isLampOn })
+        assertEquals(listOf(SegmentColor.GRAY),
+            secondsRow.segments.map { it.color })
+        assertEquals(listOf(
+            SegmentColor.RED,
+            SegmentColor.RED,
+            SegmentColor.RED,
+            SegmentColor.RED),
+            fiveHoursRow.segments.map { it.color })
+        assertEquals(listOf(
+            SegmentColor.RED,
+            SegmentColor.RED,
+            SegmentColor.RED,
+            SegmentColor.GRAY),
+            oneHoursRow.segments.map { it.color })
+
+        assertEquals(listOf(
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.RED,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW),
+            fiveMinutesRow.segments.map { it.color })
+
+        assertEquals(listOf(
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW,
+            SegmentColor.YELLOW),
+            oneMinutesRow.segments.map { it.color })
+    }
+
 
 
 }
