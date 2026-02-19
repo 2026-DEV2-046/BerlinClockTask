@@ -11,7 +11,7 @@ class BerlinClockConverterTest {
     @Test
     fun secondsLampShouldOffWhenSecondIsOdd() {
         val berlinClockConverter= BerlinClockConverter()
-        val berlinClock = berlinClockConverter.convert(1)
+        val berlinClock = berlinClockConverter.convert(0,1)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertFalse(secondsLamp.isLampOn)
@@ -21,7 +21,7 @@ class BerlinClockConverterTest {
     fun secondsLampShouldOnWhenSecondIsEven() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val berlinClock = berlinClockConverter.convert(2)
+        val berlinClock = berlinClockConverter.convert(0,2)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertTrue(secondsLamp.isLampOn)
@@ -31,7 +31,7 @@ class BerlinClockConverterTest {
     fun secondsLampShouldColorGrayWhenSecondIsOdd() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val berlinClock = berlinClockConverter.convert(1)
+        val berlinClock = berlinClockConverter.convert(0,1)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertEquals(SegmentColor.GRAY, secondsLamp.color)
@@ -41,40 +41,40 @@ class BerlinClockConverterTest {
     fun secondsLampShouldColorYellowWhenSecondIsEven() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val berlinClock = berlinClockConverter.convert(2)
+        val berlinClock = berlinClockConverter.convert(0,2)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
         assertEquals(SegmentColor.YELLOW, secondsLamp.color)
     }
 
     @Test
-    fun fiveHours4LampsShouldOffWhenHour4() {
+    fun fiveHoursRow4LampsShouldOffWhenHour4() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateFiveHoursRow(4)
-        val fiveHoursLamps = segments.map { it.isLampOn }
+        val berlinClock = berlinClockConverter.convert(4,0)
+        val fiveHoursLamps = berlinClock.fiveHoursRow.segments.map { it.isLampOn }
 
 
         assertEquals(listOf(false, false, false, false), fiveHoursLamps)
     }
 
     @Test
-    fun fiveHours4LampsOutOf1ShouldTurnOnWhenHour5() {
+    fun fiveHoursRow4LampsOutOf1ShouldTurnOnWhenHour5() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateFiveHoursRow(5)
-        val fiveHoursLamps = segments.map { it.isLampOn }
+        val berlinClock = berlinClockConverter.convert(5,0)
+        val fiveHoursLamps = berlinClock.fiveHoursRow.segments.map { it.isLampOn }
 
 
         assertEquals(listOf(true, false, false, false), fiveHoursLamps)
     }
 
     @Test
-    fun fiveHours4LampsOutOf1ShouldColorRedWhenHour5() {
+    fun fiveHoursRow4LampsOutOf1ShouldColorRedWhenHour5() {
         val berlinClockConverter= BerlinClockConverter()
 
-        val segments = berlinClockConverter.generateFiveHoursRow(5)
-        val fiveHoursLampsColor = segments.map { it.color }
+        val berlinClock = berlinClockConverter.convert(5,0)
+        val fiveHoursLampsColor = berlinClock.fiveHoursRow.segments.map { it.color }
 
 
         assertEquals(listOf(SegmentColor.RED, SegmentColor.GRAY, SegmentColor.GRAY, SegmentColor.GRAY), fiveHoursLampsColor)

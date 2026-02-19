@@ -7,9 +7,10 @@ import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 
 class BerlinClockConverter {
 
-    fun convert(second: Int): BerlinClock {
+    fun convert(hour: Int, second: Int): BerlinClock {
         return BerlinClock(
-            secondsRow=generateSecondsRow(second),
+            secondsRow = generateSecondsRow(second),
+            fiveHoursRow = generateFiveHoursRow(hour),
         )
     }
 
@@ -24,15 +25,17 @@ class BerlinClockConverter {
         )
     }
 
-    internal fun generateFiveHoursRow(hour: Int): List<BerlinClockSegment> {
-        val result = hour/5
+    private fun generateFiveHoursRow(hour: Int): BerlinClockRow {
+        val result = hour / 5
 
-        return List(4){ index ->
-            BerlinClockSegment(
-                isLampOn = index < result,
-                color = if(index < result) SegmentColor.RED else SegmentColor.GRAY
-            )
-        }
+        return BerlinClockRow(
+            segments = List(4) { index ->
+                BerlinClockSegment(
+                    isLampOn = index < result,
+                    color = if (index < result) SegmentColor.RED else SegmentColor.GRAY
+                )
+            }
+        )
     }
 
     internal fun generateOneHoursRow(hour: Int): List<BerlinClockSegment> {
