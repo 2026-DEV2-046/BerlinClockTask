@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.TimeProvider
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
@@ -24,6 +26,7 @@ class BerlinClockViewModel(
 
     private fun startClockTimer() {
         viewModelScope.launch {
+            while (isActive) {
                 val time = timeProvider.getCurrentTime()
                 val result = converter.convert(
                     time.hour,
@@ -39,6 +42,9 @@ class BerlinClockViewModel(
                     currentTime = time
                         .format(DateTimeFormatter.ofPattern("HH:mm:ss"))
                 )
+
+                delay(1000)
+            }
         }
     }
 

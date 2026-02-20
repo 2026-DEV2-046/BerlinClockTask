@@ -9,6 +9,7 @@ import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -69,5 +70,48 @@ class BerlinClockViewModelTest {
 
         viewModel.dispose()
     }
+
+    @Test
+    fun viewModelEmitsCorrectTimeOnTimeAdvance() = runTest {
+        val fakeTimeProvider = FakeTimeProvider(
+            LocalTime.of(23, 59, 59))
+        val converter = mockk<BerlinClockConverter>()
+
+        every { converter.convert(23, 59, 59) } returns fakeClockData
+
+        val viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
+
+        runCurrent()
+        val initialState = viewModel.uiState.value
+        val initialStateBerlinClock= BerlinClock(
+            secondsRow = initialState.secondsRow,
+            fiveHoursRow = initialState.fiveHoursRow,
+            oneHoursRow = initialState.oneHoursRow,
+            fiveMinutesRow = initialState.fiveMinutesRow,
+            oneMinutesRow = initialState.oneMinutesRow
+        )
+        assertEquals("23:59:59", initialState.currentTime)
+        assertEquals(fakeClockData, initialStateBerlinClock)
+
+        fakeTimeProvider.setTime(LocalTime.of(0, 0, 0))
+        every { converter.convert(0, 0, 0) } returns fakeClockData
+        advanceTimeBy(1000)
+        runCurrent()
+
+
+        val updatedState = viewModel.uiState.value
+        val updateStateBerlinClock= BerlinClock(
+            secondsRow = initialState.secondsRow,
+            fiveHoursRow = initialState.fiveHoursRow,
+            oneHoursRow = initialState.oneHoursRow,
+            fiveMinutesRow = initialState.fiveMinutesRow,
+            oneMinutesRow = initialState.oneMinutesRow
+        )
+        assertEquals("00:00:00", updatedState.currentTime)
+        assertEquals(fakeClockData, updateStateBerlinClock)
+
+        viewModel.dispose()
+    }
+
 
 }
