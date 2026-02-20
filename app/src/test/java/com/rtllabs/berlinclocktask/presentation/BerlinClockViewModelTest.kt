@@ -113,5 +113,25 @@ class BerlinClockViewModelTest {
         viewModel.dispose()
     }
 
+    @Test
+    fun disposeStopsClockUpdates() = runTest {
+        val fakeTimeProvider = FakeTimeProvider(LocalTime.of(10, 0, 0))
+        val converter = mockk<BerlinClockConverter>()
+
+        every { converter.convert(any(), any(), any()) } returns fakeClockData
+
+        val viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
+        runCurrent()
+        val initialState = viewModel.uiState.value
+
+        viewModel.dispose()
+        fakeTimeProvider.setTime(LocalTime.of(11, 0, 0))
+        advanceTimeBy(2000)
+        runCurrent()
+
+        val afterDisposeState = viewModel.uiState.value
+        assertEquals(initialState.currentTime, afterDisposeState.currentTime)
+    }
+
 
 }
