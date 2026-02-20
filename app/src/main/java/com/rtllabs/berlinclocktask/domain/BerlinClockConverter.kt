@@ -4,8 +4,9 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClock
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
+import javax.inject.Inject
 
-class BerlinClockConverter {
+class BerlinClockConverter @Inject constructor() {
 
     fun convert(hour: Int, minute: Int, second: Int): BerlinClock {
         return BerlinClock(
