@@ -1,7 +1,9 @@
 package com.rtllabs.berlinclocktask
 
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
@@ -125,6 +127,20 @@ class BerlinClockScreenTest {
 
         composeTestRule.onNodeWithTag("segment-YELLOW-true").assertExists()
     }
+
+    @Test
+    fun berlinClockScreenDisplaysFiveRows() {
+        val stateFlow = MutableStateFlow(
+            fakeUiState
+        )
+
+        composeTestRule.setContent {
+            BerlinClockScreen("Berlin Clock",uiStateFlow = stateFlow)
+        }
+
+        composeTestRule.onAllNodesWithTag("lamp-row").assertCountEquals(5)
+    }
+
 
 
 }

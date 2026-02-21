@@ -15,15 +15,18 @@ import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.ui.theme.BerlinClockTaskTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 
 @Composable
-fun BerlinRow(row: BerlinClockRow, lampSize: Dp) {
+fun BerlinRow(row: BerlinClockRow, lampSize: Dp, isCircle: Boolean= false) {
     Row(
+        modifier = Modifier.testTag("lamp-row"),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         row.segments.forEach { segment ->
-            BerlinSegment(segment = segment,lampSize)
+            BerlinSegment(segment = segment,lampSize,isCircle)
         }
     }
 }
@@ -42,7 +45,7 @@ fun BerlinRowPreview() {
     val stateFlow = remember { MutableStateFlow(previewState) }
     val row=stateFlow.collectAsState().value.secondsRow
     BerlinClockTaskTheme {
-        BerlinRow(row = row, lampSize = 20.dp)
+        BerlinRow(row = row, lampSize = 20.dp,)
     }
 }
 

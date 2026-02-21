@@ -38,6 +38,8 @@ fun BerlinClockScreen(
         contentAlignment = Alignment.Center
     ) {
         val circleSize=maxWidth/5
+        val lampSizeForFiveMinuteMinRow =maxWidth/13
+        val lampSizeForFourSegmentRow =maxWidth/5
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,11 +54,32 @@ fun BerlinClockScreen(
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
-            BerlinRow(
-                uiState.secondsRow,
-                lampSize = circleSize
-            )
-
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                BerlinRow(
+                    uiState.secondsRow,
+                    isCircle = true,
+                    lampSize = circleSize
+                )
+                BerlinRow(
+                    uiState.fiveHoursRow,
+                    lampSize = lampSizeForFourSegmentRow,
+                )
+                BerlinRow(
+                    uiState.oneHoursRow,
+                    lampSize = lampSizeForFourSegmentRow,
+                )
+                BerlinRow(
+                    uiState.fiveMinutesRow,
+                    lampSize = lampSizeForFiveMinuteMinRow,
+                )
+                BerlinRow(
+                    uiState.oneMinutesRow,
+                    lampSize = lampSizeForFourSegmentRow,
+                )
+            }
         }
     }
 }

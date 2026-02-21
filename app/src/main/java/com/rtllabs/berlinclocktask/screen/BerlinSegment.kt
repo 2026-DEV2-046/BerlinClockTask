@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -21,7 +22,7 @@ import com.rtllabs.berlinclocktask.ui.theme.BerlinClockTaskTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp) {
+fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp, isCircle: Boolean = false) {
     Box(
         modifier = Modifier
             .size(lampSize)
@@ -32,7 +33,7 @@ fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp) {
                     SegmentColor.YELLOW -> if (segment.isLampOn) Color.Yellow else Color.DarkGray
                     SegmentColor.GRAY -> Color.DarkGray
                 },
-                shape = CircleShape
+                shape = if (isCircle) CircleShape else RectangleShape
             )
     )
 }
@@ -51,6 +52,6 @@ fun BerlinSegmentPreview() {
     val stateFlow = remember { MutableStateFlow(previewState) }
     val row=stateFlow.collectAsState().value.secondsRow.segments.first()
     BerlinClockTaskTheme {
-        BerlinSegment(segment = row, lampSize = 20.dp)
+        BerlinSegment(segment = row, lampSize = 20.dp, isCircle = false)
     }
 }
