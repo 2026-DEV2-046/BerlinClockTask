@@ -1,9 +1,7 @@
-package com.rtllabs.berlinclocktask
+package com.rtllabs.berlinclocktask.domain
 
-import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
-import org.junit.Assert.*
-
+import org.junit.Assert
 import org.junit.Test
 
 class BerlinClockConverterTest {
@@ -14,7 +12,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,0,1)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
-        assertFalse(secondsLamp.isLampOn)
+        Assert.assertFalse(secondsLamp.isLampOn)
     }
 
     @Test
@@ -24,7 +22,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,0,2)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
-        assertTrue(secondsLamp.isLampOn)
+        Assert.assertTrue(secondsLamp.isLampOn)
     }
 
     @Test
@@ -34,7 +32,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,0,1)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
-        assertEquals(SegmentColor.GRAY, secondsLamp.color)
+        Assert.assertEquals(SegmentColor.GRAY, secondsLamp.color)
     }
 
     @Test
@@ -44,7 +42,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,0,2)
         val secondsLamp = berlinClock.secondsRow.segments.first()
 
-        assertEquals(SegmentColor.YELLOW, secondsLamp.color)
+        Assert.assertEquals(SegmentColor.YELLOW, secondsLamp.color)
     }
 
     @Test
@@ -55,7 +53,7 @@ class BerlinClockConverterTest {
         val fiveHoursLamps = berlinClock.fiveHoursRow.segments.map { it.isLampOn }
 
 
-        assertEquals(listOf(false, false, false, false), fiveHoursLamps)
+        Assert.assertEquals(listOf(false, false, false, false), fiveHoursLamps)
     }
 
     @Test
@@ -66,7 +64,7 @@ class BerlinClockConverterTest {
         val fiveHoursLamps = berlinClock.fiveHoursRow.segments.map { it.isLampOn }
 
 
-        assertEquals(listOf(true, false, false, false), fiveHoursLamps)
+        Assert.assertEquals(listOf(true, false, false, false), fiveHoursLamps)
     }
 
     @Test
@@ -77,7 +75,14 @@ class BerlinClockConverterTest {
         val fiveHoursLampsColor = berlinClock.fiveHoursRow.segments.map { it.color }
 
 
-        assertEquals(listOf(SegmentColor.RED, SegmentColor.GRAY, SegmentColor.GRAY, SegmentColor.GRAY), fiveHoursLampsColor)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ), fiveHoursLampsColor
+        )
     }
 
     @Test
@@ -88,7 +93,7 @@ class BerlinClockConverterTest {
         val oneHoursLamps = berlinClock.oneHoursRow.segments.map { it.isLampOn }
 
 
-        assertEquals(listOf(false, false, false, false), oneHoursLamps)
+        Assert.assertEquals(listOf(false, false, false, false), oneHoursLamps)
     }
 
     @Test
@@ -99,8 +104,15 @@ class BerlinClockConverterTest {
         val oneHoursLamps = berlinClock.oneHoursRow.segments.map { it.isLampOn }
         val oneHoursLampsColor = berlinClock.oneHoursRow.segments.map { it.color }
 
-        assertEquals(listOf(true, false, false, false), oneHoursLamps)
-        assertEquals(listOf(SegmentColor.RED, SegmentColor.GRAY, SegmentColor.GRAY, SegmentColor.GRAY), oneHoursLampsColor)
+        Assert.assertEquals(listOf(true, false, false, false), oneHoursLamps)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ), oneHoursLampsColor
+        )
 
     }
 
@@ -113,8 +125,15 @@ class BerlinClockConverterTest {
         val oneHoursLampsColor = berlinClock.oneHoursRow.segments.map { it.color }
 
 
-        assertEquals(listOf(true, true, true, true), oneHoursLamps)
-        assertEquals(listOf(SegmentColor.RED, SegmentColor.RED, SegmentColor.RED, SegmentColor.RED), oneHoursLampsColor)
+        Assert.assertEquals(listOf(true, true, true, true), oneHoursLamps)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.RED
+            ), oneHoursLampsColor
+        )
 
     }
 
@@ -126,7 +145,7 @@ class BerlinClockConverterTest {
         val fiveMinuteLampsCount = berlinClock.fiveMinutesRow.segments.count { it.isLampOn }
 
 
-        assertEquals(0, fiveMinuteLampsCount)
+        Assert.assertEquals(0, fiveMinuteLampsCount)
     }
 
     @Test
@@ -137,7 +156,7 @@ class BerlinClockConverterTest {
         val fiveMinuteLampsCount = berlinClock.fiveMinutesRow.segments.count { it.isLampOn }
 
 
-        assertEquals(1, fiveMinuteLampsCount)
+        Assert.assertEquals(1, fiveMinuteLampsCount)
     }
 
     @Test
@@ -149,19 +168,22 @@ class BerlinClockConverterTest {
         val fiveMinuteLampsColor = berlinClock.fiveMinutesRow.segments.map { it.color }
 
 
-        assertEquals(2, fiveMinuteLampsOnCount)
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY),fiveMinuteLampsColor)
+        Assert.assertEquals(2, fiveMinuteLampsOnCount)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ), fiveMinuteLampsColor
+        )
     }
 
     @Test
@@ -173,19 +195,22 @@ class BerlinClockConverterTest {
         val fiveMinuteLampsColor = berlinClock.fiveMinutesRow.segments.map { it.color }
 
 
-        assertEquals(3, fiveMinuteLampsOnCount)
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY),fiveMinuteLampsColor)
+        Assert.assertEquals(3, fiveMinuteLampsOnCount)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ), fiveMinuteLampsColor
+        )
     }
 
     @Test
@@ -197,19 +222,22 @@ class BerlinClockConverterTest {
         val fiveMinuteLampsColor = berlinClock.fiveMinutesRow.segments.map { it.color }
 
 
-        assertEquals(11, fiveMinuteLampsOnCount)
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW),fiveMinuteLampsColor)
+        Assert.assertEquals(11, fiveMinuteLampsOnCount)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW
+            ), fiveMinuteLampsColor
+        )
     }
 
     @Test
@@ -219,7 +247,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,55,0)
         val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
 
-        assertEquals(0, oneMinuteLampsOnCount)
+        Assert.assertEquals(0, oneMinuteLampsOnCount)
     }
 
     @Test
@@ -229,7 +257,7 @@ class BerlinClockConverterTest {
         val berlinClock = berlinClockConverter.convert(0,56,0)
         val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
 
-        assertEquals(1, oneMinuteLampsOnCount)
+        Assert.assertEquals(1, oneMinuteLampsOnCount)
     }
 
     @Test
@@ -240,8 +268,15 @@ class BerlinClockConverterTest {
         val oneMinuteLampsOnCount = berlinClock.oneMinutesRow.segments.count { it.isLampOn }
         val oneMinuteLampsColor = berlinClock.oneMinutesRow.segments.map { it.color }
 
-        assertEquals(4, oneMinuteLampsOnCount)
-        assertEquals(listOf(SegmentColor.YELLOW, SegmentColor.YELLOW, SegmentColor.YELLOW, SegmentColor.YELLOW), oneMinuteLampsColor)
+        Assert.assertEquals(4, oneMinuteLampsOnCount)
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW
+            ), oneMinuteLampsColor
+        )
 
     }
 
@@ -257,11 +292,11 @@ class BerlinClockConverterTest {
         val fiveMinutesRow=berlinClock.fiveMinutesRow
         val oneMinutesRow=berlinClock.oneMinutesRow
 
-        assertEquals(1,secondsRow.segments.count { it.isLampOn })
-        assertEquals(0,fiveHoursRow.segments.count { it.isLampOn })
-        assertEquals(0,oneHoursRow.segments.count { it.isLampOn })
-        assertEquals(0,fiveMinutesRow.segments.count { it.isLampOn })
-        assertEquals(0,oneMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(1, secondsRow.segments.count { it.isLampOn })
+        Assert.assertEquals(0, fiveHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(0, oneHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(0, fiveMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(0, oneMinutesRow.segments.count { it.isLampOn })
     }
 
     @Test
@@ -275,44 +310,53 @@ class BerlinClockConverterTest {
         val fiveMinutesRow=berlinClock.fiveMinutesRow
         val oneMinutesRow=berlinClock.oneMinutesRow
 
-        assertEquals(1,secondsRow.segments.count { it.isLampOn })
-        assertEquals(2,fiveHoursRow.segments.count { it.isLampOn })
-        assertEquals(2,oneHoursRow.segments.count { it.isLampOn })
-        assertEquals(6,fiveMinutesRow.segments.count { it.isLampOn })
-        assertEquals(4,oneMinutesRow.segments.count { it.isLampOn })
-        assertEquals(listOf(SegmentColor.YELLOW),
+        Assert.assertEquals(1, secondsRow.segments.count { it.isLampOn })
+        Assert.assertEquals(2, fiveHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(2, oneHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(6, fiveMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(4, oneMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(
+            listOf(SegmentColor.YELLOW),
             secondsRow.segments.map { it.color })
-        assertEquals(listOf(
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ),
             fiveHoursRow.segments.map { it.color })
-        assertEquals(listOf(
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ),
             oneHoursRow.segments.map { it.color })
 
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY,
-            SegmentColor.GRAY),fiveMinutesRow.segments.map { it.color })
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY,
+                SegmentColor.GRAY
+            ), fiveMinutesRow.segments.map { it.color })
 
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW
+            ),
             oneMinutesRow.segments.map { it.color })
     }
 
@@ -327,45 +371,54 @@ class BerlinClockConverterTest {
         val fiveMinutesRow=berlinClock.fiveMinutesRow
         val oneMinutesRow=berlinClock.oneMinutesRow
 
-        assertEquals(0,secondsRow.segments.count { it.isLampOn })
-        assertEquals(4,fiveHoursRow.segments.count { it.isLampOn })
-        assertEquals(3,oneHoursRow.segments.count { it.isLampOn })
-        assertEquals(11,fiveMinutesRow.segments.count { it.isLampOn })
-        assertEquals(4,oneMinutesRow.segments.count { it.isLampOn })
-        assertEquals(listOf(SegmentColor.GRAY),
+        Assert.assertEquals(0, secondsRow.segments.count { it.isLampOn })
+        Assert.assertEquals(4, fiveHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(3, oneHoursRow.segments.count { it.isLampOn })
+        Assert.assertEquals(11, fiveMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(4, oneMinutesRow.segments.count { it.isLampOn })
+        Assert.assertEquals(
+            listOf(SegmentColor.GRAY),
             secondsRow.segments.map { it.color })
-        assertEquals(listOf(
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.RED),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.RED
+            ),
             fiveHoursRow.segments.map { it.color })
-        assertEquals(listOf(
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.RED,
-            SegmentColor.GRAY),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.RED,
+                SegmentColor.GRAY
+            ),
             oneHoursRow.segments.map { it.color })
 
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.RED,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.RED,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW
+            ),
             fiveMinutesRow.segments.map { it.color })
 
-        assertEquals(listOf(
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW,
-            SegmentColor.YELLOW),
+        Assert.assertEquals(
+            listOf(
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW,
+                SegmentColor.YELLOW
+            ),
             oneMinutesRow.segments.map { it.color })
     }
 

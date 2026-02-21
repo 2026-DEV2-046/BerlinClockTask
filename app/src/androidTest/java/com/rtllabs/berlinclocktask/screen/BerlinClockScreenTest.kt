@@ -1,4 +1,4 @@
-package com.rtllabs.berlinclocktask
+package com.rtllabs.berlinclocktask.screen
 
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
@@ -13,7 +13,6 @@ import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.presentation.BerlinClockViewModel
 import com.rtllabs.berlinclocktask.presentation.SystemTimeProvider
-import com.rtllabs.berlinclocktask.screen.BerlinClockScreen
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -54,11 +53,11 @@ class BerlinClockScreenTest {
         fiveHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(false, SegmentColor.GRAY) }),
         oneHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(false, SegmentColor.GRAY) }),
         fiveMinutesRow = BerlinClockRow(List(11) {
-                BerlinClockSegment(
-                    false,
-                    SegmentColor.GRAY
-                )
-            }),
+            BerlinClockSegment(
+                false,
+                SegmentColor.GRAY
+            )
+        }),
         oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(false, SegmentColor.GRAY) })
     )
 
