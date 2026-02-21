@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">BerlinClockTask</string>
+    <string name="app_name">BerlinClock</string>
+    <string name="app_title">Berlin Clock</string>
 </resources>

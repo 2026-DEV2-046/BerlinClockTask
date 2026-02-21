@@ -17,11 +17,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import com.rtllabs.berlinclocktask.utils.TAG_FOR_TESTING_ROW
 
 @Composable
 fun BerlinRow(row: BerlinClockRow, lampSize: Dp, isCircle: Boolean= false) {
     Row(
-        modifier = Modifier.testTag("lamp-row"),
+        modifier = Modifier.testTag(TAG_FOR_TESTING_ROW),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

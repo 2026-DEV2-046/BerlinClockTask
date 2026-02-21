@@ -22,10 +22,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: BerlinClockViewModel = hiltViewModel()
 
+
             BerlinClockTaskTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     BerlinClockScreen(
-                        name = "Berlin Clock",
+                        name = getString(R.string.app_name),
                         modifier = Modifier.padding(innerPadding),
                         uiStateFlow = viewModel.uiState
                     )

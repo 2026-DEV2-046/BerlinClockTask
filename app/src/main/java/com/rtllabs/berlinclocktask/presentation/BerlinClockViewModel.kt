@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.TimeProvider
+import com.rtllabs.berlinclocktask.utils.DATE_FORMAT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -43,7 +44,7 @@ class BerlinClockViewModel @Inject constructor(
                     fiveMinutesRow = result.fiveMinutesRow,
                     oneMinutesRow = result.oneMinutesRow,
                     currentTime = time
-                        .format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                        .format(DateTimeFormatter.ofPattern(DATE_FORMAT))
                 )
 
                 delay(1000)

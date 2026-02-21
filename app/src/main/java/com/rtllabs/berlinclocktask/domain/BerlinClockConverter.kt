@@ -4,6 +4,8 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClock
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
+import com.rtllabs.berlinclocktask.utils.ELEVEN_SEGMENT_LAMP_COUNT
+import com.rtllabs.berlinclocktask.utils.FOUR_SEGMENT_LAMP_COUNT
 import javax.inject.Inject
 
 class BerlinClockConverter @Inject constructor() {
@@ -33,7 +35,7 @@ class BerlinClockConverter @Inject constructor() {
         val result = hour / 5
 
         return BerlinClockRow(
-            segments = List(4) { index ->
+            segments = List(FOUR_SEGMENT_LAMP_COUNT) { index ->
                 BerlinClockSegment(
                     isLampOn = index < result,
                     color = if (index < result) SegmentColor.RED else SegmentColor.GRAY
@@ -45,7 +47,7 @@ class BerlinClockConverter @Inject constructor() {
     private fun generateOneHoursRow(hour: Int): BerlinClockRow {
         val remainder = hour % 5
         return BerlinClockRow(
-            segments = List(4) { index ->
+            segments = List(FOUR_SEGMENT_LAMP_COUNT) { index ->
                 BerlinClockSegment(
                     isLampOn = index < remainder,
                     color = if (index < remainder) SegmentColor.RED else SegmentColor.GRAY
@@ -58,7 +60,7 @@ class BerlinClockConverter @Inject constructor() {
         val result = minute / 5
 
         return BerlinClockRow(
-            segments = List(11) { index ->
+            segments = List(ELEVEN_SEGMENT_LAMP_COUNT) { index ->
                 val isOn = index < result
                 val color =
                     if (isOn) if ((index + 1) % 3 == 0) SegmentColor.RED else SegmentColor.YELLOW else SegmentColor.GRAY
@@ -73,7 +75,7 @@ class BerlinClockConverter @Inject constructor() {
     private fun generateOneMinutesRow(minute: Int): BerlinClockRow {
         val remainder = minute % 5
         return BerlinClockRow(
-            segments = List(4) { index ->
+            segments = List(FOUR_SEGMENT_LAMP_COUNT) { index ->
                 BerlinClockSegment(
                     isLampOn = index < remainder,
                     color = if (index < remainder) SegmentColor.YELLOW else SegmentColor.GRAY

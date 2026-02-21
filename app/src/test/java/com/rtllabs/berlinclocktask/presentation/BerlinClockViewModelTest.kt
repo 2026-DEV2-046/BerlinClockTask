@@ -6,6 +6,8 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClock
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
+import com.rtllabs.berlinclocktask.utils.DAY_END_TIME
+import com.rtllabs.berlinclocktask.utils.DAY_START_TIME
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -90,7 +92,7 @@ class BerlinClockViewModelTest {
             fiveMinutesRow = initialState.fiveMinutesRow,
             oneMinutesRow = initialState.oneMinutesRow
         )
-        assertEquals("23:59:59", initialState.currentTime)
+        assertEquals(DAY_END_TIME, initialState.currentTime)
         assertEquals(fakeClockData, initialStateBerlinClock)
 
         fakeTimeProvider.setTime(LocalTime.of(0, 0, 0))
@@ -107,7 +109,7 @@ class BerlinClockViewModelTest {
             fiveMinutesRow = initialState.fiveMinutesRow,
             oneMinutesRow = initialState.oneMinutesRow
         )
-        assertEquals("00:00:00", updatedState.currentTime)
+        assertEquals(DAY_START_TIME, updatedState.currentTime)
         assertEquals(fakeClockData, updateStateBerlinClock)
 
         viewModel.dispose()

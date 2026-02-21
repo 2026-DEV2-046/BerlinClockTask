@@ -19,6 +19,7 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.ui.theme.BerlinClockTaskTheme
+import com.rtllabs.berlinclocktask.utils.TAG_FOR_TESTING_SEGMENT
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
@@ -26,7 +27,7 @@ fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp, isCircle: Boolean =
     Box(
         modifier = Modifier
             .size(lampSize)
-            .testTag("segment-${segment.color}-${segment.isLampOn}")
+            .testTag("$TAG_FOR_TESTING_SEGMENT${segment.color}-${segment.isLampOn}")
             .background(
                 when (segment.color) {
                     SegmentColor.RED -> if (segment.isLampOn) Color.Red else Color.DarkGray
