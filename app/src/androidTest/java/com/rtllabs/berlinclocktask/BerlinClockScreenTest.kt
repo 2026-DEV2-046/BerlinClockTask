@@ -2,6 +2,7 @@ package com.rtllabs.berlinclocktask
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
@@ -110,6 +111,19 @@ class BerlinClockScreenTest {
         stateFlow.value = fakeUiStateUpdate
 
         composeTestRule.onNodeWithText("12:00:01").assertIsDisplayed()
+    }
+
+    @Test
+    fun berlinClockScreenDisplaysYellowSecondsLampOn() {
+        val stateFlow = MutableStateFlow(
+            fakeUiState
+        )
+
+        composeTestRule.setContent {
+            BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
+        }
+
+        composeTestRule.onNodeWithTag("segment-YELLOW-true").assertExists()
     }
 
 
