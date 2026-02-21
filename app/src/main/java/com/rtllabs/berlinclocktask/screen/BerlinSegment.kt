@@ -4,15 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
@@ -23,10 +22,25 @@ import com.rtllabs.berlinclocktask.utils.TAG_FOR_TESTING_SEGMENT
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp, isCircle: Boolean = false) {
+fun BerlinSegment(
+    segment: BerlinClockSegment,
+    isCircle: Boolean = false,
+    lampCount: Int=0
+) {
+    val boxSizeModifier = when (lampCount) {
+        1 -> {
+            Modifier.size(60.dp)
+        }
+        11 -> {
+            Modifier.size(28.dp,40.dp)
+        }
+        else -> {
+            Modifier.size(90.dp,40.dp)
+        }
+    }
+
     Box(
-        modifier = Modifier
-            .size(lampSize)
+        modifier = boxSizeModifier
             .testTag("$TAG_FOR_TESTING_SEGMENT${segment.color}-${segment.isLampOn}")
             .background(
                 when (segment.color) {
@@ -34,7 +48,7 @@ fun BerlinSegment(segment: BerlinClockSegment, lampSize: Dp, isCircle: Boolean =
                     SegmentColor.YELLOW -> if (segment.isLampOn) Color.Yellow else Color.DarkGray
                     SegmentColor.GRAY -> Color.DarkGray
                 },
-                shape = if (isCircle) CircleShape else RectangleShape
+                shape = if (isCircle) CircleShape else RoundedCornerShape(2.dp)
             )
     )
 }
@@ -53,6 +67,6 @@ fun BerlinSegmentPreview() {
     val stateFlow = remember { MutableStateFlow(previewState) }
     val row=stateFlow.collectAsState().value.secondsRow.segments.first()
     BerlinClockTaskTheme {
-        BerlinSegment(segment = row, lampSize = 20.dp, isCircle = false)
+        BerlinSegment(segment = row)
     }
 }

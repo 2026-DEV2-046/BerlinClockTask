@@ -2,7 +2,7 @@ package com.rtllabs.berlinclocktask.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -31,19 +31,15 @@ fun BerlinClockScreen(
 ) {
     val uiState by uiStateFlow.collectAsStateWithLifecycle()
 
-    BoxWithConstraints(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Blue),
         contentAlignment = Alignment.Center
     ) {
-        val circleSize=maxWidth/5
-        val lampSizeForFiveMinuteMinRow =maxWidth/13
-        val lampSizeForFourSegmentRow =maxWidth/5
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
                 text = name, color = Color.White, fontSize = 32.sp, fontWeight = FontWeight.Bold
@@ -56,28 +52,23 @@ fun BerlinClockScreen(
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 BerlinRow(
                     uiState.secondsRow,
                     isCircle = true,
-                    lampSize = circleSize
                 )
                 BerlinRow(
                     uiState.fiveHoursRow,
-                    lampSize = lampSizeForFourSegmentRow,
                 )
                 BerlinRow(
                     uiState.oneHoursRow,
-                    lampSize = lampSizeForFourSegmentRow,
                 )
                 BerlinRow(
                     uiState.fiveMinutesRow,
-                    lampSize = lampSizeForFiveMinuteMinRow,
                 )
                 BerlinRow(
                     uiState.oneMinutesRow,
-                    lampSize = lampSizeForFourSegmentRow,
                 )
             }
         }
