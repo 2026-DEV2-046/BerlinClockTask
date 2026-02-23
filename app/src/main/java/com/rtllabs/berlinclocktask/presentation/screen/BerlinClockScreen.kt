@@ -1,4 +1,4 @@
-package com.rtllabs.berlinclocktask.screen
+package com.rtllabs.berlinclocktask.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +22,8 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.ui.theme.BerlinClockTaskTheme
+import com.rtllabs.berlinclocktask.utils.SegmentRowType
+import com.rtllabs.berlinclocktask.utils.SegmentShape
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -56,7 +58,8 @@ fun BerlinClockScreen(
             ) {
                 BerlinRow(
                     uiState.secondsRow,
-                    isCircle = true,
+                    shape = SegmentShape.CIRCLE,
+                    segmentRowType = SegmentRowType.ONE_SEGMENT_LAMP
                 )
                 BerlinRow(
                     uiState.fiveHoursRow,
@@ -66,6 +69,7 @@ fun BerlinClockScreen(
                 )
                 BerlinRow(
                     uiState.fiveMinutesRow,
+                    segmentRowType = SegmentRowType.ELEVEN_SEGMENT_LAMP
                 )
                 BerlinRow(
                     uiState.oneMinutesRow,
@@ -75,7 +79,7 @@ fun BerlinClockScreen(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun BerlinClockScreenPreview() {
     val previewState = BerlinClockUiState(
@@ -85,8 +89,8 @@ fun BerlinClockScreenPreview() {
         oneHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
         fiveMinutesRow = BerlinClockRow(List(11) {
             BerlinClockSegment(
-                it % 3 == 0,
-                SegmentColor.YELLOW
+                (it+1) % 3 == 0,
+                SegmentColor.RED
             )
         }),
         oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) })

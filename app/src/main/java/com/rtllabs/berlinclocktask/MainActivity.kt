@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rtllabs.berlinclocktask.presentation.BerlinClockViewModel
-import com.rtllabs.berlinclocktask.screen.BerlinClockScreen
+import com.rtllabs.berlinclocktask.presentation.screen.BerlinClockScreen
 import com.rtllabs.berlinclocktask.ui.theme.BerlinClockTaskTheme
 import dagger.hilt.android.AndroidEntryPoint
 

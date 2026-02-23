@@ -13,6 +13,7 @@ import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.presentation.BerlinClockViewModel
 import com.rtllabs.berlinclocktask.presentation.SystemTimeProvider
+import com.rtllabs.berlinclocktask.presentation.screen.BerlinClockScreen
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -123,7 +124,7 @@ class BerlinClockScreenTest {
             BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
         }
 
-        composeTestRule.onNodeWithTag("segment-YELLOW-true").assertExists()
+        composeTestRule.onNodeWithTag("segment-YELLOW-true-ONE_SEGMENT_LAMP-CIRCLE").assertExists()
     }
 
     @Test
