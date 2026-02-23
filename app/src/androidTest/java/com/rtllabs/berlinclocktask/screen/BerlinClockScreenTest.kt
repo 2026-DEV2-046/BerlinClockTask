@@ -12,7 +12,7 @@ import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
 import com.rtllabs.berlinclocktask.presentation.BerlinClockUiState
 import com.rtllabs.berlinclocktask.presentation.BerlinClockViewModel
-import com.rtllabs.berlinclocktask.presentation.SystemTimeProvider
+import com.rtllabs.berlinclocktask.data.SystemTimeProvider
 import com.rtllabs.berlinclocktask.presentation.screen.BerlinClockScreen
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

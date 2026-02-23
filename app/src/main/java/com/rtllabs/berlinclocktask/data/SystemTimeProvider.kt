@@ -1,4 +1,4 @@
-package com.rtllabs.berlinclocktask.presentation
+package com.rtllabs.berlinclocktask.data
 
 import com.rtllabs.berlinclocktask.domain.TimeProvider
 import java.time.LocalTime

@@ -1,7 +1,7 @@
 package com.rtllabs.berlinclocktask.di
 
 import com.rtllabs.berlinclocktask.domain.TimeProvider
-import com.rtllabs.berlinclocktask.presentation.SystemTimeProvider
+import com.rtllabs.berlinclocktask.data.SystemTimeProvider
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
