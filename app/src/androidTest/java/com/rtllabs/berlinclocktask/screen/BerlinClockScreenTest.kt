@@ -28,6 +28,7 @@ class BerlinClockScreenTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
+
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
@@ -39,13 +40,11 @@ class BerlinClockScreenTest {
     @Inject
     lateinit var fakeTimeProvider: SystemTimeProvider
 
-
     @Before
     fun setup() {
         hiltRule.inject()
         viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
     }
-
 
     private val fakeUiState = BerlinClockUiState(
         currentTime = "12:00:00",
@@ -104,7 +103,7 @@ class BerlinClockScreenTest {
         )
 
         composeTestRule.setContent {
-            BerlinClockScreen("Berlin Clock",uiStateFlow = stateFlow)
+            BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
         }
 
         composeTestRule.onNodeWithText("12:00:00").assertIsDisplayed()
@@ -134,12 +133,11 @@ class BerlinClockScreenTest {
         )
 
         composeTestRule.setContent {
-            BerlinClockScreen("Berlin Clock",uiStateFlow = stateFlow)
+            BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
         }
 
         composeTestRule.onAllNodesWithTag("lamp-row").assertCountEquals(5)
     }
-
 
 
 }

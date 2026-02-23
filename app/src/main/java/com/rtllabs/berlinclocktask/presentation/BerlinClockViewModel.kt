@@ -37,7 +37,7 @@ class BerlinClockViewModel @Inject constructor(
                     time.minute,
                     time.second
                 )
-                _uiState.value =BerlinClockUiState(
+                _uiState.value = BerlinClockUiState(
                     secondsRow = result.secondsRow,
                     fiveHoursRow = result.fiveHoursRow,
                     oneHoursRow = result.oneHoursRow,
@@ -54,5 +54,4 @@ class BerlinClockViewModel @Inject constructor(
     fun dispose() {
         viewModelScope.cancel()
     }
-
 }

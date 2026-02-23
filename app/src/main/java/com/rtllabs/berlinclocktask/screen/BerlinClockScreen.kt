@@ -75,7 +75,6 @@ fun BerlinClockScreen(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun BerlinClockScreenPreview() {
@@ -84,10 +83,16 @@ fun BerlinClockScreenPreview() {
         secondsRow = BerlinClockRow(listOf(BerlinClockSegment(true, SegmentColor.YELLOW))),
         fiveHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
         oneHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
-        fiveMinutesRow = BerlinClockRow(List(11) { BerlinClockSegment(it % 3 == 0, SegmentColor.YELLOW) }),
-        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) }) )
+        fiveMinutesRow = BerlinClockRow(List(11) {
+            BerlinClockSegment(
+                it % 3 == 0,
+                SegmentColor.YELLOW
+            )
+        }),
+        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) })
+    )
 
-    val stateFlow = remember { MutableStateFlow(previewState) }
+    val stateFlow = MutableStateFlow(previewState)
     BerlinClockTaskTheme {
         BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
     }

@@ -11,7 +11,6 @@ class HiltTestRunner : AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        // This line is the key. It replaces your real application with Hilt's test application.
         return super.newApplication(cl, HiltTestApplication::class.java.name, context)
     }
 }

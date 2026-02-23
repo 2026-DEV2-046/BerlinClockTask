@@ -19,14 +19,14 @@ import com.rtllabs.berlinclocktask.utils.TAG_FOR_TESTING_ROW
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun BerlinRow(row: BerlinClockRow, isCircle: Boolean= false) {
+fun BerlinRow(row: BerlinClockRow, isCircle: Boolean = false) {
     Row(
         modifier = Modifier.testTag(TAG_FOR_TESTING_ROW),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         row.segments.forEach { segment ->
-            BerlinSegment(segment = segment,isCircle,lampCount = row.segments.size)
+            BerlinSegment(segment = segment, isCircle, lampCount = row.segments.size)
         }
     }
 }
@@ -39,11 +39,17 @@ fun BerlinRowPreview() {
         secondsRow = BerlinClockRow(listOf(BerlinClockSegment(true, SegmentColor.YELLOW))),
         fiveHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
         oneHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
-        fiveMinutesRow = BerlinClockRow(List(11) { BerlinClockSegment(it % 3 == 0, SegmentColor.YELLOW) }),
-        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) }) )
+        fiveMinutesRow = BerlinClockRow(List(11) {
+            BerlinClockSegment(
+                it % 3 == 0,
+                SegmentColor.YELLOW
+            )
+        }),
+        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) })
+    )
 
     val stateFlow = remember { MutableStateFlow(previewState) }
-    val row=stateFlow.collectAsState().value.secondsRow
+    val row = stateFlow.collectAsState().value.secondsRow
     BerlinClockTaskTheme {
         BerlinRow(row = row)
     }

@@ -25,17 +25,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 fun BerlinSegment(
     segment: BerlinClockSegment,
     isCircle: Boolean = false,
-    lampCount: Int=0
+    lampCount: Int = 0
 ) {
     val boxSizeModifier = when (lampCount) {
         1 -> {
             Modifier.size(60.dp)
         }
+
         11 -> {
-            Modifier.size(28.dp,40.dp)
+            Modifier.size(28.dp, 40.dp)
         }
+
         else -> {
-            Modifier.size(90.dp,40.dp)
+            Modifier.size(90.dp, 40.dp)
         }
     }
 
@@ -61,11 +63,17 @@ fun BerlinSegmentPreview() {
         secondsRow = BerlinClockRow(listOf(BerlinClockSegment(true, SegmentColor.YELLOW))),
         fiveHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
         oneHoursRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 2, SegmentColor.RED) }),
-        fiveMinutesRow = BerlinClockRow(List(11) { BerlinClockSegment(it % 3 == 0, SegmentColor.YELLOW) }),
-        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) }) )
+        fiveMinutesRow = BerlinClockRow(List(11) {
+            BerlinClockSegment(
+                it % 3 == 0,
+                SegmentColor.YELLOW
+            )
+        }),
+        oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(it < 1, SegmentColor.YELLOW) })
+    )
 
     val stateFlow = remember { MutableStateFlow(previewState) }
-    val row=stateFlow.collectAsState().value.secondsRow.segments.first()
+    val row = stateFlow.collectAsState().value.secondsRow.segments.first()
     BerlinClockTaskTheme {
         BerlinSegment(segment = row)
     }

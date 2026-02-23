@@ -24,10 +24,16 @@ class BerlinClockViewModelTest {
 
     private var berlinClockConverter: BerlinClockConverter = mockk<BerlinClockConverter>()
     private var fakeTimeProvider: FakeTimeProvider = FakeTimeProvider(
-        LocalTime.of(0, 0, 0))
+        LocalTime.of(0, 0, 0)
+    )
     private val fakeClockData = BerlinClock(
-        secondsRow = BerlinClockRow(segments = listOf(BerlinClockSegment(
-            isLampOn = true, color = SegmentColor.YELLOW))),
+        secondsRow = BerlinClockRow(
+            segments = listOf(
+                BerlinClockSegment(
+                    isLampOn = true, color = SegmentColor.YELLOW
+                )
+            )
+        ),
         fiveHoursRow = BerlinClockRow(segments = List(4) {
             BerlinClockSegment(isLampOn = false, color = SegmentColor.GRAY)
         }),
@@ -51,9 +57,13 @@ class BerlinClockViewModelTest {
     fun viewModelStateUpdateShouldReturnCorrectBerlinDataAndCurrentTime() = runTest {
         fakeTimeProvider.setTime(LocalTime.of(12, 0, 0))
 
-        every { berlinClockConverter.convert(hour = fakeTimeProvider.getCurrentTime().hour,
-            minute = fakeTimeProvider.getCurrentTime().minute,
-            second = fakeTimeProvider.getCurrentTime().second) } returns fakeClockData
+        every {
+            berlinClockConverter.convert(
+                hour = fakeTimeProvider.getCurrentTime().hour,
+                minute = fakeTimeProvider.getCurrentTime().minute,
+                second = fakeTimeProvider.getCurrentTime().second
+            )
+        } returns fakeClockData
 
         val viewModel = BerlinClockViewModel(berlinClockConverter, fakeTimeProvider)
 
@@ -61,7 +71,7 @@ class BerlinClockViewModelTest {
         val initialState = viewModel.uiState.value
         assertEquals("12:00:00", initialState.currentTime)
 
-        val initialStateBerlinClock= BerlinClock(
+        val initialStateBerlinClock = BerlinClock(
             secondsRow = initialState.secondsRow,
             fiveHoursRow = initialState.fiveHoursRow,
             oneHoursRow = initialState.oneHoursRow,
@@ -76,7 +86,8 @@ class BerlinClockViewModelTest {
     @Test
     fun viewModelEmitsCorrectTimeOnTimeAdvance() = runTest {
         val fakeTimeProvider = FakeTimeProvider(
-            LocalTime.of(23, 59, 59))
+            LocalTime.of(23, 59, 59)
+        )
         val converter = mockk<BerlinClockConverter>()
 
         every { converter.convert(23, 59, 59) } returns fakeClockData
@@ -85,7 +96,7 @@ class BerlinClockViewModelTest {
 
         runCurrent()
         val initialState = viewModel.uiState.value
-        val initialStateBerlinClock= BerlinClock(
+        val initialStateBerlinClock = BerlinClock(
             secondsRow = initialState.secondsRow,
             fiveHoursRow = initialState.fiveHoursRow,
             oneHoursRow = initialState.oneHoursRow,
@@ -102,7 +113,7 @@ class BerlinClockViewModelTest {
 
 
         val updatedState = viewModel.uiState.value
-        val updateStateBerlinClock= BerlinClock(
+        val updateStateBerlinClock = BerlinClock(
             secondsRow = initialState.secondsRow,
             fiveHoursRow = initialState.fiveHoursRow,
             oneHoursRow = initialState.oneHoursRow,
