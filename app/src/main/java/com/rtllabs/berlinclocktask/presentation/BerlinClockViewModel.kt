@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.TimeProvider
-import com.rtllabs.berlinclocktask.utils.DATE_FORMAT
 import com.rtllabs.berlinclocktask.utils.formatToClock
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
