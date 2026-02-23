@@ -128,6 +128,19 @@ class BerlinClockScreenTest {
     }
 
     @Test
+    fun berlinClockScreenDisplaysGrayFourSegmentRowLampOffCount12() {
+        val stateFlow = MutableStateFlow(
+            fakeUiState
+        )
+
+        composeTestRule.setContent {
+            BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
+        }
+
+        composeTestRule.onAllNodesWithTag("segment-GRAY-false-FOUR_SEGMENT_LAMP-RECTANGLE").assertCountEquals(12)
+    }
+
+    @Test
     fun berlinClockScreenDisplaysFiveRows() {
         val stateFlow = MutableStateFlow(
             fakeUiState
