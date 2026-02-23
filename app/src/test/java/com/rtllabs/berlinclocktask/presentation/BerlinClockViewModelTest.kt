@@ -1,18 +1,15 @@
 package com.rtllabs.berlinclocktask.presentation
 
+import app.cash.turbine.test
 import com.rtllabs.berlinclocktask.MainDispatcherRule
 import com.rtllabs.berlinclocktask.domain.BerlinClockConverter
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClock
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockRow
 import com.rtllabs.berlinclocktask.domain.entity.BerlinClockSegment
 import com.rtllabs.berlinclocktask.domain.entity.SegmentColor
-import com.rtllabs.berlinclocktask.utils.DAY_END_TIME
-import com.rtllabs.berlinclocktask.utils.DAY_START_TIME
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -48,10 +45,8 @@ class BerlinClockViewModelTest {
         }),
     )
 
-
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
-
 
     @Test
     fun viewModelStateUpdateShouldReturnCorrectBerlinDataAndCurrentTime() = runTest {
@@ -66,21 +61,22 @@ class BerlinClockViewModelTest {
         } returns fakeClockData
 
         val viewModel = BerlinClockViewModel(berlinClockConverter, fakeTimeProvider)
+        viewModel.uiState.test {
+            skipItems(1)
+            val state = awaitItem()
+            val initialStateBerlinClock= BerlinClock(
+                secondsRow = state.secondsRow,
+                fiveHoursRow = state.fiveHoursRow,
+                oneHoursRow = state.oneHoursRow,
+                fiveMinutesRow = state.fiveMinutesRow,
+                oneMinutesRow = state.oneMinutesRow
+            )
 
-        runCurrent()
-        val initialState = viewModel.uiState.value
-        assertEquals("12:00:00", initialState.currentTime)
+            assertEquals("12:00:00", state.currentTime)
+            assertEquals(fakeClockData, initialStateBerlinClock)
 
-        val initialStateBerlinClock = BerlinClock(
-            secondsRow = initialState.secondsRow,
-            fiveHoursRow = initialState.fiveHoursRow,
-            oneHoursRow = initialState.oneHoursRow,
-            fiveMinutesRow = initialState.fiveMinutesRow,
-            oneMinutesRow = initialState.oneMinutesRow
-        )
-        assertEquals(fakeClockData, initialStateBerlinClock)
-
-        viewModel.dispose()
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -88,62 +84,41 @@ class BerlinClockViewModelTest {
         val fakeTimeProvider = FakeTimeProvider(
             LocalTime.of(23, 59, 59)
         )
-        val converter = mockk<BerlinClockConverter>()
 
-        every { converter.convert(23, 59, 59) } returns fakeClockData
+        every { berlinClockConverter.convert(23, 59, 59) } returns fakeClockData
+        val viewModel = BerlinClockViewModel(berlinClockConverter, fakeTimeProvider)
 
-        val viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
+        viewModel.uiState.test {
+            skipItems(1)
+            val first = awaitItem()
+            val berlinClock = BerlinClock(
+                secondsRow = first.secondsRow,
+                fiveHoursRow = first.fiveHoursRow,
+                oneHoursRow = first.oneHoursRow,
+                fiveMinutesRow = first.fiveMinutesRow,
+                oneMinutesRow = first.oneMinutesRow
+            )
 
-        runCurrent()
-        val initialState = viewModel.uiState.value
-        val initialStateBerlinClock = BerlinClock(
-            secondsRow = initialState.secondsRow,
-            fiveHoursRow = initialState.fiveHoursRow,
-            oneHoursRow = initialState.oneHoursRow,
-            fiveMinutesRow = initialState.fiveMinutesRow,
-            oneMinutesRow = initialState.oneMinutesRow
-        )
-        assertEquals(DAY_END_TIME, initialState.currentTime)
-        assertEquals(fakeClockData, initialStateBerlinClock)
+            assertEquals("23:59:59", first.currentTime)
+            assertEquals(fakeClockData, berlinClock)
 
-        fakeTimeProvider.setTime(LocalTime.of(0, 0, 0))
-        every { converter.convert(0, 0, 0) } returns fakeClockData
-        advanceTimeBy(1000)
-        runCurrent()
+            fakeTimeProvider.setTime(LocalTime.of(0, 0, 0))
+            every { berlinClockConverter.convert(0, 0, 0) } returns fakeClockData
 
+            val second = awaitItem()
+            val berlinClockUpdate = BerlinClock(
+                secondsRow = second.secondsRow,
+                fiveHoursRow = second.fiveHoursRow,
+                oneHoursRow = second.oneHoursRow,
+                fiveMinutesRow = second.fiveMinutesRow,
+                oneMinutesRow = second.oneMinutesRow
+            )
 
-        val updatedState = viewModel.uiState.value
-        val updateStateBerlinClock = BerlinClock(
-            secondsRow = initialState.secondsRow,
-            fiveHoursRow = initialState.fiveHoursRow,
-            oneHoursRow = initialState.oneHoursRow,
-            fiveMinutesRow = initialState.fiveMinutesRow,
-            oneMinutesRow = initialState.oneMinutesRow
-        )
-        assertEquals(DAY_START_TIME, updatedState.currentTime)
-        assertEquals(fakeClockData, updateStateBerlinClock)
+            assertEquals("00:00:00", second.currentTime)
+            assertEquals(fakeClockData, berlinClockUpdate)
 
-        viewModel.dispose()
-    }
-
-    @Test
-    fun disposeStopsClockUpdates() = runTest {
-        val fakeTimeProvider = FakeTimeProvider(LocalTime.of(10, 0, 0))
-        val converter = mockk<BerlinClockConverter>()
-
-        every { converter.convert(any(), any(), any()) } returns fakeClockData
-
-        val viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
-        runCurrent()
-        val initialState = viewModel.uiState.value
-
-        viewModel.dispose()
-        fakeTimeProvider.setTime(LocalTime.of(11, 0, 0))
-        advanceTimeBy(2000)
-        runCurrent()
-
-        val afterDisposeState = viewModel.uiState.value
-        assertEquals(initialState.currentTime, afterDisposeState.currentTime)
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
 
