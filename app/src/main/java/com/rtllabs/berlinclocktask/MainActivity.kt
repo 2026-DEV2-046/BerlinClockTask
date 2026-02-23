@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: BerlinClockViewModel = hiltViewModel()
 
-
             BerlinClockTaskTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     BerlinClockScreen(
