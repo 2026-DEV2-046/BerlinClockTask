@@ -41,11 +41,7 @@ class BerlinClockScreenTest {
     @Inject
     lateinit var fakeTimeProvider: SystemTimeProvider
 
-    @Before
-    fun setup() {
-        hiltRule.inject()
-        viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
-    }
+    private lateinit var stateFlow: MutableStateFlow<BerlinClockUiState>
 
     private val fakeUiState = BerlinClockUiState(
         currentTime = "12:00:00",
@@ -75,37 +71,32 @@ class BerlinClockScreenTest {
         oneMinutesRow = BerlinClockRow(List(4) { BerlinClockSegment(false, SegmentColor.GRAY) })
     )
 
-    @Test
-    fun berlinClockScreenDisplaysTitle() {
-        val stateFlow = MutableStateFlow(fakeUiState)
-
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        viewModel = BerlinClockViewModel(converter, fakeTimeProvider)
+        stateFlow = MutableStateFlow(
+            fakeUiState
+        )
         composeTestRule.setContent {
             BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
         }
+    }
+
+    @Test
+    fun berlinClockScreenDisplaysTitle() {
 
         composeTestRule.onNodeWithText("Berlin Clock").assertIsDisplayed()
     }
 
     @Test
     fun berlinClockScreenDisplaysCurrentTime() {
-        val stateFlow = MutableStateFlow(fakeUiState)
-
-        composeTestRule.setContent {
-            BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onNodeWithText("12:00:00").assertIsDisplayed()
     }
 
     @Test
     fun berlinClockScreenUpdatesWhenUiStateChanges() {
-        val stateFlow = MutableStateFlow(
-            fakeUiState
-        )
-
-        composeTestRule.setContent {
-            BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onNodeWithText("12:00:00").assertIsDisplayed()
 
@@ -116,52 +107,24 @@ class BerlinClockScreenTest {
 
     @Test
     fun berlinClockScreenDisplaysYellowSecondsLampOn() {
-        val stateFlow = MutableStateFlow(
-            fakeUiState
-        )
-
-        composeTestRule.setContent {
-            BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onNodeWithTag("segment-YELLOW-true-ONE_SEGMENT_LAMP-CIRCLE").assertExists()
     }
 
     @Test
     fun berlinClockScreenDisplaysGrayFourSegmentRowLampOffCount12() {
-        val stateFlow = MutableStateFlow(
-            fakeUiState
-        )
-
-        composeTestRule.setContent {
-            BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onAllNodesWithTag("segment-GRAY-false-FOUR_SEGMENT_LAMP-RECTANGLE").assertCountEquals(12)
     }
 
     @Test
     fun berlinClockScreenDisplaysGrayElevenSegmentRowLampOffCount11() {
-        val stateFlow = MutableStateFlow(
-            fakeUiState
-        )
-
-        composeTestRule.setContent {
-            BerlinClockScreen(name = "Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onAllNodesWithTag("segment-GRAY-false-ELEVEN_SEGMENT_LAMP-RECTANGLE").assertCountEquals(11)
     }
 
     @Test
     fun berlinClockScreenDisplaysFiveRows() {
-        val stateFlow = MutableStateFlow(
-            fakeUiState
-        )
-
-        composeTestRule.setContent {
-            BerlinClockScreen("Berlin Clock", uiStateFlow = stateFlow)
-        }
 
         composeTestRule.onAllNodesWithTag("lamp-row").assertCountEquals(5)
     }
